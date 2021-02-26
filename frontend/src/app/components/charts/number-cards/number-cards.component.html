@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row">
+        <h2>Dashboard</h2>
+        <div class="container">
+            <ngx-charts-number-card [scheme]="colorScheme" [results]="data" [cardColor]="cardColor"
+                (select)="onSelect($event)">
+            </ngx-charts-number-card> <!-- Content here -->
+        </div>
+    </div>
+    <div class="row">
+        <h2>Data</h2>
+        <div class="container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Sensor</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Number of People</th>
+                        <th scope="col">Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let record of records; index as i">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>{{ record.serial_number }}</td>
+                        <td><span [ngClass]="record.state == 'UP' ? 'logged-in': 'logged-out'">●</span></td>                        
+                        <td>{{ record.people_in_area | number }}</td>
+                        <td>{{ record.timestamp }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

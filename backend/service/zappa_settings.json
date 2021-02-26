@@ -1,0 +1,17 @@
+{
+    "dev": {
+        "aws_region": "us-east-1",
+        "django_settings": "service.settings.dev",
+        "profile_name": "default",
+        "project_name": "backend",
+        "runtime": "python3.7",
+        "slim_handler": false,
+        "cors": true,
+        "timeout_seconds": 300,
+        "aws_environment_variables": {
+            "dynamoSensorsTable": "density-dev-sensors-table",
+            "dynamoHeartbeatsTable": "density-dev-heartbeats-table"
+        },
+        "s3_bucket": "zappa-1hahff8uj"
+    }
+}

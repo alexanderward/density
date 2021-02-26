@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+.dark{
+    background: #1b1e27;
+}
+
+main {
+    justify-content: center;
+    height: 100%;
+}
+main .chart-col {
+    width: 75%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 15%;
+    bottom: 0;
+}
+
+.dark .ngx-charts text{
+    fill: #a0aabe;
+}
+body, table, td, tr, th{
+    color: #a0aabe;
+}
+.logged-in {
+    color: green;
+  }
+  
+.logged-out {
+    color: red;
+}

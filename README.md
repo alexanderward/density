@@ -1,5 +1,6 @@
 # density
-Deployed on serverlessly on AWS Lambda.  Uses DynamoDB as it's data layer to consume heartbeats from sensors.  Backend is Django & Frontend is Angular
+Deployed serverlessly on AWS Lambda http://density-hw.s3-website-us-east-1.amazonaws.com/.  Uses DynamoDB as it's data layer to consume heartbeats from sensors.  Backend is Django & Frontend is Angular
+
 
 # Heartbeat Emulation
 | Variable         | Type      | Value                                                                                                                     |

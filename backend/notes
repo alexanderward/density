@@ -1,0 +1,7 @@
+sls plugin install -n serverless-python-requirements -s dev
+
+
+cd C:\Projects\Personal\density\backend\service
+set dynamoSensorsTable=density-dev-sensors-table
+set dynamoHeartbeatsTable=density-dev-heartbeats-table
+python manage.py runserver --settings=service.settings.dev

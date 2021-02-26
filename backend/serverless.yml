@@ -1,0 +1,76 @@
+
+
+service: density
+
+#plugins:
+#  - serverless-python-requirements
+#custom:
+#  pythonRequirements:
+#    slim: true
+#    dockerizePip: true
+#    pipCmdExtraArgs:
+#      - --no-cache-dir
+#    fileName: requirements.txt
+#    layers:
+#      - {Ref: PythonRequirementsLambdaLayer}
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.dynamoSensorsTable}"
+        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.dynamoHeartbeatsTable}"
+
+  environment:
+    dynamoSensorsTable: "${self:service}-${opt:stage}-sensors-table"
+    dynamoHeartbeatsTable: "${self:service}-${opt:stage}-heartbeats-table"
+    defaultRCU: 5
+    defaultWCU: 5
+
+
+resources:
+  Resources:
+    SensorsTable:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Delete
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: serial_number
+            AttributeType: S
+        KeySchema:
+          - AttributeName: serial_number
+            KeyType: HASH
+
+        ProvisionedThroughput:
+          ReadCapacityUnits: ${self:provider.environment.defaultRCU}
+          WriteCapacityUnits: ${self:provider.environment.defaultWCU}
+        TableName: ${self:provider.environment.dynamoSensorsTable}
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+
+    oHeartbeatsTable:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Delete
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: serial_number
+            AttributeType: S
+          - AttributeName: timestamp
+            AttributeType: N
+        KeySchema:
+          - AttributeName: serial_number
+            KeyType: HASH
+          - AttributeName: timestamp
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: ${self:provider.environment.defaultRCU}
+          WriteCapacityUnits: ${self:provider.environment.defaultWCU}
+        TableName: ${self:provider.environment.dynamoHeartbeatsTable}
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES

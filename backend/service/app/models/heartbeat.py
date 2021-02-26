@@ -18,4 +18,5 @@ class Heartbeat(BaseModel):
     serial_number = UnicodeAttribute(hash_key=True)
     timestamp = NumberAttribute(range_key=True)
     state = UnicodeEnumAttribute(enum_type=StateEnum)
+    people_in_area = NumberAttribute()
     metadata = JSONAttribute()

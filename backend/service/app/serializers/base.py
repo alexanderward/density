@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.fields import ChoiceField, empty
 
 
 class BaseSerializer(serializers.Serializer):
@@ -31,3 +32,22 @@ class BaseSerializer(serializers.Serializer):
 
     def serialize(self):
         return self.data
+
+
+class EnumField(ChoiceField):
+
+    def __init__(self, enum, **kwargs):
+        self.enum = enum
+        super(EnumField, self).__init__(choices=enum.choices(), **kwargs)
+
+    def to_representation(self, value):
+        if isinstance(value, list):
+            return [self.convert_to_display(x) for x in value]
+        return self.convert_to_display(value)
+
+    def convert_to_display(self, value):
+        return value.name
+
+    def run_validation(self, data=empty):
+        value = super().run_validation(data)
+        return self.enum[value]

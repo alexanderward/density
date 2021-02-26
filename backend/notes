@@ -1,5 +1,5 @@
 sls plugin install -n serverless-python-requirements -s dev
-
+sls deploy -s dev
 
 cd C:\Projects\Personal\density\backend\service
 set dynamoSensorsTable=density-dev-sensors-table
